@@ -1,0 +1,1 @@
+inserted into product (ProductId = 546, ProductName = phone, Description = good to call, PurchasePrice = 342.54, SellingPrice = 667.76, Quantity = 10)
