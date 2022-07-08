@@ -53,34 +53,6 @@ public class Main {
                 choicemain = inputint.nextInt();
             }
         }
-
-            /*System.out.println("Program initiated");
-            System.out.println("Enter ProductID");
-            int pid = inputint.nextInt();
-            System.out.println("Enter Product Name");
-            String pname = inputstr.nextLine();
-            System.out.println("Enter Product Description");
-            String Des = inputstr.nextLine();
-            System.out.println("Enter Product Price");
-            double pprice = inputint.nextDouble();
-            System.out.println("Enter Product selling Price");
-            double sprice = inputint.nextDouble();
-            System.out.println("Enter Product Quantity");
-            int quan = inputint.nextInt();
-            Products p = new Products();
-            p.insertData(pid , pname , Des , pprice , sprice , quan);
-            Products p = new Products();
-            //p.displayData();
-            //p.searchData(5);
-            //p.UpdateData(5 , "cream","good for you" , 6.7 , 8.9 , 90);
-            //p.insertData(6 , "home","stay safe" , 6.7 , 8.9 , 50);
-            p.deleteData(6);
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Driver not found");
-        } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode());
-            System.out.println("Database Error");
-        }*/
     }
 
     private static void DisplayMainOption() {

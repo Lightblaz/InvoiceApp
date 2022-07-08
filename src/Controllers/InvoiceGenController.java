@@ -50,7 +50,7 @@ public class InvoiceGenController {
                 Customer c = new Customer();
                 InvoiceGeneration in = new InvoiceGeneration();
 
-                if (choice == 1 || (choice == 2)) {
+                if (choice == 1) {
                     System.out.println("Program initiated");
                     /*System.out.println("Enter Invoice NUmber");
                     int inNo = input.nextInt();
@@ -153,22 +153,26 @@ public class InvoiceGenController {
                     in.setDiscounts(discountlist);
                     in.setProunits(quanlist);
 
-                    if (choice == 1) {
+                    insertData(in);
+                    /*if (choice == 1) {
                         //in.insertData(inNo, date, cname, productlist, quanlist, pricelist, totlist, discountlist);
                         insertData(in);
                     } else {
                         c.UpdateData(inNo, date, cname, productlist, pricelist, totlist, discountlist);
-                    }
-                } else if (choice == 3)
+                    }*/
+                } else if (choice == 2){
+                    System.out.println("Enter Invoice ID");
+                    int Innum = input.nextInt();
+                    in.setInNo(Innum);
+                    deleteData(in);
+                }
+                else if (choice == 3)
                 {
                     System.out.println("Enter Customer Name");
                     input.nextLine();
                     String cname = input.nextLine();
                     in.displayCustomerdata(cname);
                 } else if (choice == 4) {
-
-
-
                     input.nextLine();
                     System.out.println("Enter Start date");
                     startdate = input.nextLine();
@@ -206,7 +210,7 @@ public class InvoiceGenController {
     {
         System.out.println("Select Correct number");
         System.out.println("1: Insert");
-        //System.out.println("2: Update");
+        System.out.println("2: Delete");
         System.out.println("3: Display Customer Invoices");
         System.out.println("4: Search Custommer Invoices based on Dates");
         //System.out.println("5: DisplayAll");

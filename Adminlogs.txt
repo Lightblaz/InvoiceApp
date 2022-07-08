@@ -5,3 +5,4 @@ Deleted product where ProductId = 54
 inserted into customer (CustomerId = 48 , CustomerName = James , Email = james@gmail.com , Address = 43 , colombo Sri lanka , ContactNumber = +94 76 343 453 34 , DOB = 2002/04/23 , Gender = M)
 Updated  customer  where CustomerId = 48 and these values updated , CustomerName = James , Email = james2@gmail.com , Address = 34 , panadura , ri lanka , ContactNumber = +94 76 453 5623 , DOB = 2000/04/22 , Gender = M)
 Deleted from customer where CustomerId = 48
+Deleted from Invoicegen where InvoiceNo = 0

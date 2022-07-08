@@ -40,7 +40,7 @@ public class ProductCont {
                 Products p = new Products();
                 Readnwrite rw = new Readnwrite();
                 Getallproducts(p);
-                if (choice == 1 || (choice == 2)) {
+                if (choice == 1 || (choice == 2)) {             //if insert or update go throught the same process ,  because similar inputs
                     System.out.println("Program initiated");
                     System.out.println("Enter ProductID");
                     int pid = input.nextInt();
@@ -62,10 +62,8 @@ public class ProductCont {
                     int quan = input.nextInt();
                     p.setQuan(quan);
                     if (choice == 1) {
-                        //p.insertData(pid, pname, Des, pprice, sprice, quan);
                         insertData(p);
                     } else {
-                        //p.UpdateData(pid, pname, Des, pprice, sprice, quan);
                         UpdateData(p);
                     }
                 } else if (choice == 3) {
@@ -224,22 +222,14 @@ public class ProductCont {
 
         DBConnector.getDBConnection();
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invoice", "root", "");
-        //create the statement to do CRUD(create, retrieve , update , delete)
-
         Statement stat = con.createStatement();
 
-        //delete the values to the database table
         String queryString = "SELECT ProductName , ProductId FROM product group by ProductName";
-        //System.out.println(queryString);
-        //int i = stat.executeUpdate(queryString);
         ResultSet rs = stat.executeQuery(queryString);
-        //System.out.println(rs.getString("first_name"));
         while (rs.next()){
             p.setProName(rs.getString("ProductName"));
             p.setProID(rs.getInt("ProductId"));
-            //Prod.add(p.getProName());
             System.out.println(" ProductName = "+ p.getProName() + " , ProductId = " + p.getProID());
-            //System.out.println(Prod.get(0));
         }
         stat.close();
         con.close();
@@ -248,7 +238,6 @@ public class ProductCont {
     public boolean searchProduct(Products p) throws SQLException , ClassNotFoundException {
         DBConnector.getDBConnection();
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invoice", "root", "");
-        //create the statement to do CRUD(create, retrieve , update , delete)
 
         Statement stat = con.createStatement();
 
@@ -265,7 +254,6 @@ public class ProductCont {
     public int GetProductQuantity(Products p) throws SQLException , ClassNotFoundException {
         DBConnector.getDBConnection();
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invoice", "root", "");
-        //create the statement to do CRUD(create, retrieve , update , delete)
 
         Statement stat = con.createStatement();
 
@@ -281,7 +269,6 @@ public class ProductCont {
     public double GetProductPrice(Products p) throws SQLException , ClassNotFoundException {
         DBConnector.getDBConnection();
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invoice", "root", "");
-        //create the statement to do CRUD(create, retrieve , update , delete)
 
         Statement stat = con.createStatement();
 
@@ -297,7 +284,6 @@ public class ProductCont {
     public void UpdateProductQuantity(String pname , int quan) throws SQLException , ClassNotFoundException {
         DBConnector.getDBConnection();
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invoice", "root", "");
-        //create the statement to do CRUD(create, retrieve , update , delete)
 
         Statement stat = con.createStatement();
 
