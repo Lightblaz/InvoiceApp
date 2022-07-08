@@ -10,7 +10,7 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class customerCont {
-    public customerCont() {
+    public void start(){
         displayoptions();
         ModifyCustomer();
     }
@@ -214,5 +214,19 @@ public class customerCont {
         }
         stat.close();
         con.close();
+    }
+    public boolean customerExist(String customerName)throws SQLException , ClassNotFoundException , IOException
+    {
+        DBConnector.getDBConnection();
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invoice", "root", "");
+        Statement stat = con.createStatement();
+        String queryString = "select * FROM customer WHERE CustomerName='" + customerName + "'";
+        ResultSet rs = stat.executeQuery(queryString);
+        if (rs.next()){
+            return true;
+        }
+        stat.close();
+        con.close();
+        return false;
     }
 }

@@ -1,1 +1,1 @@
-inserted into product (ProductId = 546, ProductName = phone, Description = good to call, PurchasePrice = 342.54, SellingPrice = 667.76, Quantity = 10)
+inserted into Invoice (InvoiceNo = 95 , Indate = 2022/07/08 , Cusname = Jason , Product Names = mouse , Product quantity = 5 , Unit price = 11.4 , Total price = 56.43 , Discount price = 0.5700000000000001)

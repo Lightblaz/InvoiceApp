@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class ProductCont {
 
-    public  void start(){
+    public void start(){
         displayoptions();
         ModifyProduct();
     }

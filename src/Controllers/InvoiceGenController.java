@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 public class InvoiceGenController {
 
@@ -24,6 +26,7 @@ public class InvoiceGenController {
         int choice = 0;
         Products p = new Products();
         ProductCont pc = new ProductCont();
+        customerCont cc = new customerCont();
         String proname = "";
         String productlist = ""  , quanlist = "", pricelist = "" , totlist = "" , discountlist = "";
         int pquan = 0;
@@ -34,7 +37,8 @@ public class InvoiceGenController {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter your Choice");
         choice = input.nextInt();
-        while (choice < 1 || choice > 6){
+        while (choice < 1 || choice > 6)
+        {
             System.out.println("Wrong choice");
             choice = input.nextInt();
         }
@@ -48,15 +52,29 @@ public class InvoiceGenController {
 
                 if (choice == 1 || (choice == 2)) {
                     System.out.println("Program initiated");
-                    System.out.println("Enter Invoice NUmber");
+                    /*System.out.println("Enter Invoice NUmber");
                     int inNo = input.nextInt();
+                    in.setInNo(inNo);*/
+
+                    int inNo = getlastrInvoiceid();
                     in.setInNo(inNo);
+                    System.out.println(inNo);
                     input.nextLine();
-                    System.out.println("Enter Date");
-                    String date = input.nextLine();
+
+
+                    /*System.out.println("Enter Date");
+                    String date = input.nextLine();*/
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+                    LocalDateTime now = LocalDateTime.now();
+                    String date = dtf.format(now);
+
                     in.setIdate(date);
                     System.out.println("Enter Customer Name");
                     String cname = input.nextLine();
+                    while(!cc.customerExist(cname)){
+                        System.out.println("The name you entered doesn't exist in the database , try another name");
+                        cname = input.nextLine();
+                    }
                     in.setCusname(cname);
                     //Getting details for products
                     //p.Getallproducts();
@@ -164,6 +182,7 @@ public class InvoiceGenController {
             } catch (ClassNotFoundException ex) {
                 System.out.println("Driver not found");
             } catch (SQLException ex) {
+                System.out.println(ex.getErrorCode());
                 System.out.println("Database Error");
             } catch (Exception ex)
             {
@@ -183,7 +202,8 @@ public class InvoiceGenController {
         }
     }
 
-    public void displayoptions(){
+    public void displayoptions()
+    {
         System.out.println("Select Correct number");
         System.out.println("1: Insert");
         //System.out.println("2: Update");
@@ -275,5 +295,24 @@ public class InvoiceGenController {
         {
             System.out.println("Customer Invoice not found between these dates");
         }
+    }
+
+    public int getlastrInvoiceid() throws SQLException , ClassNotFoundException{
+        DBConnector.getDBConnection();
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invoice", "root", "");
+        //create the statement to do CRUD(create, retrieve , update , delete)
+
+        Statement stat = con.createStatement();
+
+        //insert the values to the database table
+        String queryString = "select * from invoicegen order by InvoiceNo desc limit 1";
+        //System.out.println(queryString);
+        ResultSet rs = stat.executeQuery(queryString);
+        if (rs.next())
+        {
+            int inno = rs.getInt("InvoiceNo");
+            return ++inno;
+        }
+        return 1;
     }
 }
