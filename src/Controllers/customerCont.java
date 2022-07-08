@@ -39,7 +39,7 @@ public class customerCont {
                 //Products p = new Products();
                 Customer c = new Customer();
                 if (choice == 1 || (choice == 2)) {
-                    System.out.println("Program initiated");
+                    Getallcustomers(c);
                     System.out.println("Enter Customer ID");
                     int cid = input.nextInt();
                     c.setCid(cid);
@@ -70,19 +70,20 @@ public class customerCont {
                         UpdateData(c);
                     }
                 } else if (choice == 3) {
+                    Getallcustomers(c);
                     System.out.println("Enter Customer ID");
                     int cid = input.nextInt();
                     c.setCid(cid);
                     //c.deleteData(cid);
                     deleteData(c);
                 } else if (choice == 4) {
+                    Getallcustomers(c);
                     System.out.println("Enter CustomerID");
                     int cid = input.nextInt();
                     c.setCid(cid);
                     //c.searchData(cid);
                     searchData(c);
                 } else {
-                    //c.displayData();
                     displayData(c);
                 }
             } catch (ClassNotFoundException ex) {
@@ -167,7 +168,7 @@ public class customerCont {
         if (i != 0) {
             System.out.println("Data inserted");
             Readnwrite rw = new Readnwrite();
-            String logs = "inserted into customer (CustomerId = " + c.getCid() + " , CustomerName = " + c.getCname() + " , Email = " + c.getEmail() + " , Address = " + c.getAddress() + " , ContactNumber = " + c.getContactnum() + " , DOB = " + c.getDOB() + " , Gender = " + c.getGender() + ")\n";
+            String logs = "inserted into customer (CustomerId = " + c.getCid() + " , CustomerName = " + c.getCname() + " , Email = " + c.getEmail() + " , Address = " + c.getAddress() + " , ContactNumber = " + c.getContactnum() + " , DOB = " + c.getDOB() + " , Gender = " + c.getGender() + ")";
             rw.WriteToFile(logs);
         }
     }
@@ -188,7 +189,7 @@ public class customerCont {
         if (i != 0) {
             System.out.println("Data updated");
             Readnwrite rw = new Readnwrite();
-            String logs = "Updated  customer  where CustomerId = " + c.getCid() + " and these values updated , CustomerName = " + c.getCname() + " , Email = " + c.getEmail() + " , Address = " + c.getAddress() + " , ContactNumber = " + c.getContactnum() + " , DOB = " + c.getDOB() + " , Gender = " + c.getGender() + ")\n";
+            String logs = "Updated  customer  where CustomerId = " + c.getCid() + " and these values updated , CustomerName = " + c.getCname() + " , Email = " + c.getEmail() + " , Address = " + c.getAddress() + " , ContactNumber = " + c.getContactnum() + " , DOB = " + c.getDOB() + " , Gender = " + c.getGender() + ")";
             rw.WriteToFile(logs);
         }
         stat.close();
@@ -228,5 +229,24 @@ public class customerCont {
         stat.close();
         con.close();
         return false;
+    }
+
+    public void Getallcustomers(Customer c)throws SQLException , ClassNotFoundException
+    {
+
+        //ArrayList<String> Prod = new ArrayList<String>();
+
+        DBConnector.getDBConnection();
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invoice", "root", "");
+        Statement stat = con.createStatement();
+        String queryString = "SELECT CustomerName , CustomerId FROM customer group by CustomerId";
+        ResultSet rs = stat.executeQuery(queryString);
+        while (rs.next()){
+            c.setCname(rs.getString("CustomerName"));
+            c.setCid(rs.getInt("CustomerId"));
+            System.out.println(" CustomerName = "+ c.getCname() + " , CustomerId = " + c.getCid());
+        }
+        stat.close();
+        con.close();
     }
 }

@@ -31,6 +31,7 @@ public class Main {
                 pc.start();
             }else if(choicemain == 2){
                 customerCont cc = new customerCont();
+                cc.start();
             }else if(choicemain == 3){
                 InvoiceGenController ig = new InvoiceGenController();
             }else {

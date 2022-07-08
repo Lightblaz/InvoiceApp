@@ -261,7 +261,7 @@ public class InvoiceGenController {
         {
             System.out.println("Data inserted");
             Readnwrite rw = new Readnwrite();
-            String logs = "inserted into Invoice (InvoiceNo = " + in.getInNo() + " , Indate = " + in.getIdate() + " , Cusname = " + in.getCusname() + " , Product Names = " + in.getPronames() + " , Product quantity = " + in.getProunits() + " , Unit price = " + in.getUnitprices() + " , Total price = " + in.getTotalprices() + " , Discount price = " + in.getDiscounts()  + ")\n";
+            String logs = "inserted into Invoice (InvoiceNo = " + in.getInNo() + " , Indate = " + in.getIdate() + " , Cusname = " + in.getCusname() + " , Product Names = " + in.getPronames() + " , Product quantity = " + in.getProunits() + " , Unit price = " + in.getUnitprices() + " , Total price = " + in.getTotalprices() + " , Discount price = " + in.getDiscounts()  + ")";
             rw.WriteToFile(logs);
         }
     }
@@ -314,5 +314,26 @@ public class InvoiceGenController {
             return ++inno;
         }
         return 1;
+    }
+    public void deleteData(InvoiceGeneration in) throws SQLException , ClassNotFoundException , IOException
+    {
+        DBConnector.getDBConnection();
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invoice", "root", "");
+        //create the statement to do CRUD(create, retrieve , update , delete)
+
+        Statement stat = con.createStatement();
+
+        //delete the values to the database table
+        String queryString = "DELETE FROM invoicegen WHERE InvoiceNo ='" + in.getInNo() + "'";
+        int i = stat.executeUpdate(queryString);
+
+        if (i != 0) {
+            System.out.println("Data Deleted");
+            Readnwrite rw = new Readnwrite();
+            String logs = "Deleted from Invoicegen where InvoiceNo = " + in.getInNo();
+            rw.WriteToFile(logs);
+        }
+        stat.close();
+        con.close();
     }
 }

@@ -126,7 +126,7 @@ public class ProductCont {
 
     public void insertData(Products p) throws SQLException , ClassNotFoundException , IOException {
 
-        String logs = "inserted into product (ProductId = " + p.getProID() + ", ProductName = " +  p.getProName() + ", Description = " +  p.getPdes() + ", PurchasePrice = " +  p.getPprice() + ", SellingPrice = " +  p.getSpric() + ", Quantity = " + p.getQuan() + ")\n";
+        String logs = "inserted into product (ProductId = " + p.getProID() + ", ProductName = " +  p.getProName() + ", Description = " +  p.getPdes() + ", PurchasePrice = " +  p.getPprice() + ", SellingPrice = " +  p.getSpric() + ", Quantity = " + p.getQuan() + ")";
         Readnwrite rw = new Readnwrite();
         DBConnector.getDBConnection();
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invoice", "root", "");
@@ -174,9 +174,8 @@ public class ProductCont {
 
     public void UpdateData(Products p) throws SQLException , ClassNotFoundException , IOException{
 
-        String logs = "updated into product (ProductId = " + p.getProID() + ", ProductName = " +  p.getProName() + ", Description = " +  p.getPdes() + ", PurchasePrice = " +  p.getPprice() + ", SellingPrice = " +  p.getSpric() + ", Quantity = " + p.getQuan() + ")\n";
+        String logs = "updated into product (ProductId = " + p.getProID() + ", ProductName = " +  p.getProName() + ", Description = " +  p.getPdes() + ", PurchasePrice = " +  p.getPprice() + ", SellingPrice = " +  p.getSpric() + ", Quantity = " + p.getQuan() + ")";
         Readnwrite rw = new Readnwrite();
-        rw.WriteToFile(logs);
 
         DBConnector.getDBConnection();
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invoice", "root", "");
@@ -191,12 +190,15 @@ public class ProductCont {
 
         if (i != 0) {
             System.out.println("Data updated");
+            rw.WriteToFile(logs);
         }
         stat.close();
         con.close();
     }
 
-    public void deleteData(Products p) throws SQLException , ClassNotFoundException {
+    public void deleteData(Products p) throws SQLException , ClassNotFoundException , IOException{
+        String logs = "Deleted product where ProductId = " + p.getProID();
+        Readnwrite rw = new Readnwrite();
         DBConnector.getDBConnection();
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invoice", "root", "");
         //create the statement to do CRUD(create, retrieve , update , delete)
@@ -209,6 +211,7 @@ public class ProductCont {
 
         if (i != 0) {
             System.out.println("Data Deleted");
+            rw.WriteToFile(logs);
         }
         stat.close();
         con.close();
@@ -226,15 +229,16 @@ public class ProductCont {
         Statement stat = con.createStatement();
 
         //delete the values to the database table
-        String queryString = "SELECT ProductName FROM product group by ProductName";
+        String queryString = "SELECT ProductName , ProductId FROM product group by ProductName";
         //System.out.println(queryString);
         //int i = stat.executeUpdate(queryString);
         ResultSet rs = stat.executeQuery(queryString);
         //System.out.println(rs.getString("first_name"));
         while (rs.next()){
             p.setProName(rs.getString("ProductName"));
+            p.setProID(rs.getInt("ProductId"));
             //Prod.add(p.getProName());
-            System.out.println(" ProductName = "+ p.getProName());
+            System.out.println(" ProductName = "+ p.getProName() + " , ProductId = " + p.getProID());
             //System.out.println(Prod.get(0));
         }
         stat.close();

@@ -9,10 +9,11 @@ import java.util.Scanner;
 public class Readnwrite {
 
     public void WriteToFile(String logs) throws IOException {
-        FileWriter fw=new FileWriter("Adminlogs.txt");
+        FileWriter fw=new FileWriter("Adminlogs.txt" , true);
 
         // read character wise from string and write
         // into FileWriter
+        fw.write("\n");
         for (int i = 0; i < logs.length(); i++)
             fw.write(logs.charAt(i));
 
